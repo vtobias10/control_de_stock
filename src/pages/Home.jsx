@@ -78,7 +78,7 @@ export default function Home() {
       <div className="relative flex flex-1 items-center justify-center px-4">
         <button
           onClick={handleInventoryClick}
-          className="group flex flex-col items-center justify-center w-full max-w-xl h-56 rounded-3xl bg-[rgba(255,245,238,0.95)] shadow-2xl no-underline transition p-8 text-center hover:shadow-[0_30px_60px_-10px_rgba(238,50,35,0.6)]"
+          className="cursor-pointer group flex flex-col items-center justify-center w-full max-w-xl h-56 rounded-3xl bg-[rgba(255,245,238,0.95)] shadow-2xl no-underline transition p-8 text-center hover:shadow-[0_30px_60px_-10px_rgba(238,50,35,0.6)]"
         >
           <div className="mb-4 flex items-center justify-center">
             <ArchiveBoxIcon className="w-16 h-16 text-[#F25E52]" aria-hidden="true" />
