@@ -1,33 +1,18 @@
 // backend/src/index.ts
 import express from 'express'
-import { Pool } from 'pg'
 import dotenv from 'dotenv'
+import { pool } from './db'                 // ← usa el Pool de db.ts
+import categoriesRouter from './routes/categories'
+import productsRouter from './routes/products'
 
 dotenv.config()
 
 const app = express()
-const port = Number(process.env.PORT)
-
-// Configuramos pool de conexiones PostgreSQL
-const pool = new Pool({
-  host:     process.env.DB_HOST,
-  port:     Number(process.env.DB_PORT),
-  user:     process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME,
-})
-
-// Probamos al iniciar que conecte bien
-pool
-  .connect()
-  .then(() => console.log('✅ Conectado a PostgreSQL en localhost:5432'))
-  .catch((err) => {
-    console.error('❌ Error conectando a PostgreSQL', err)
-    process.exit(1)
-  })
+const port = Number(process.env.PORT) || 3000
 
 app.use(express.json())
 
+// --- Login (igual que antes, pero usando el pool importado) ---
 app.post('/api/login', async (req, res) => {
   const { username, password } = req.body
   try {
@@ -45,11 +30,12 @@ app.post('/api/login', async (req, res) => {
   }
 })
 
+// --- Health ---
+app.get('/api/health', (_req, res) => res.json({ status: 'ok' }))
 
-// Ruta de healthcheck
-app.get('/api/health', (_req, res) => {
-  res.json({ status: 'ok' })
-})
+// --- Montar rutas nuevas ---
+app.use('/api/categories', categoriesRouter)
+app.use('/api/products', productsRouter)
 
 app.listen(port, () => {
   console.log(`⚡️ Backend escuchando en http://localhost:${port}`)

@@ -8,6 +8,8 @@ import {
   ArrowLeftOnRectangleIcon,
   ArchiveBoxIcon,
 } from '@heroicons/react/24/solid'
+import Swal from 'sweetalert2'
+import 'sweetalert2/dist/sweetalert2.min.css'
 
 export default function Home() {
   const navigate = useNavigate()
@@ -27,7 +29,13 @@ export default function Home() {
 
   const handleInventoryClick = () => {
     if (!user) {
-      alert('Por favor, para entrar a Inventario debes iniciar sesión.')
+      Swal.fire({
+      icon: "warning",
+      title: "Oops...",
+      text: "Para acceder al inventario debe iniciar sesión.",
+      confirmButtonText: 'OK',
+      confirmButtonColor: "#EE3223",
+  });
       return
     }
     navigate('/inventario')

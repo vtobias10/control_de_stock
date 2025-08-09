@@ -12,6 +12,8 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/inventario" element={<Inventario />} />
+        {/* Ruta profunda para la sección Productos dentro de Inventario */}
+        <Route path="/inventario/productos" element={<Inventario />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </Router>
