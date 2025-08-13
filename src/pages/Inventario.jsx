@@ -45,154 +45,179 @@ export default function Inventario() {
 
   return (
     <div className="h-screen min-h-0 overflow-hidden flex bg-[#FFF5EE]">
-      {/* Panel lateral con scroll propio */}
-      <aside className="w-64 bg-white shadow-lg flex flex-col h-full">
-        {/* Header (fijo) */}
-        <div className="px-6 py-8 flex flex-col items-center shrink-0">
-          <div className="bg-white p-2 rounded-full shadow-md">
-            <UserIcon className="w-6 h-6 text-[#F25E52]" />
-          </div>
-          <span className="mt-2 text-xl font-bold text-[#F25E52]">
-            {user.username}
-          </span>
-        </div>
+      {/* Panel lateral con fondo propio y scroll en el menú */}
+      <aside className="relative w-64 shadow-lg flex flex-col h-full overflow-hidden">
+        {/* BG imagen del panel izquierdo */}
+        <div
+          className="absolute inset-0 bg-cover bg-center"
+          // Cambiá 'panel.jpg' por el nombre real de tu archivo
+          style={{ backgroundImage: "url('/fondoPanel.png')" }}
+          aria-hidden="true"
+        />
+        {/* Overlay para legibilidad */}
+        <div className="absolute inset-0 bg-white/80 backdrop-blur-[1px]" aria-hidden="true" />
 
-        {/* Menú (solo esta parte scrollea) */}
-        <nav className="flex-1 px-2 space-y-1 overflow-y-auto pr-2">
-          {/* Información General (por ahora sin navegación) */}
-          <div className={singleBtn}>
-            <InformationCircleIcon className="w-5 h-5 text-[#F25E52]" />
-            <span>Información General</span>
-          </div>
-
-          {/* Operaciones */}
-          <div className={sectionBtn} onClick={() => setOpenOps(o => !o)}>
-            <span className="flex items-center gap-2">
-              <ArrowPathIcon className="w-5 h-5 text-[#F25E52]" />
-              Operaciones
-            </span>
-            {openOps ? (
-              <ChevronUpIcon className="w-5 h-5 text-[#F25E52]" />
-            ) : (
-              <ChevronDownIcon className="w-5 h-5 text-[#F25E52]" />
-            )}
-          </div>
-          {openOps && (
-            <div className="space-y-1">
-              <div className={dropdownItem}>
-                <span className="text-[#EE3223] mr-2">·</span>Transferencias
-              </div>
-              <div className={dropdownItem}>
-                <span className="text-[#EE3223] mr-2">·</span>Ajustes de Inventario
-              </div>
-              <div className={dropdownItem}>
-                <span className="text-[#EE3223] mr-2">·</span>Desechar
-              </div>
+        {/* Contenido del panel izquierdo */}
+        <div className="relative flex flex-col h-full">
+          {/* Header (fijo) */}
+          <div className="px-6 py-8 flex flex-col items-center shrink-0">
+            <div className="bg-white p-2 rounded-full shadow-md">
+              <UserIcon className="w-6 h-6 text-[#F25E52]" />
             </div>
-          )}
-
-          {/* Productos */}
-          <div className={sectionBtn} onClick={() => setOpenProd(o => !o)}>
-            <span className="flex items-center gap-2">
-              <ArchiveBoxIcon className="w-5 h-5 text-[#F25E52]" />
-              Productos
+            <span className="mt-2 text-xl font-bold text-[#F25E52]">
+              {user.username}
             </span>
-            {openProd ? (
-              <ChevronUpIcon className="w-5 h-5 text-[#F25E52]" />
-            ) : (
-              <ChevronDownIcon className="w-5 h-5 text-[#F25E52]" />
-            )}
           </div>
-          {openProd && (
-            <div className="space-y-1">
-              {/* Ahora navega a /inventario/productos */}
-              <Link to="/inventario/productos" className={dropdownItem}>
-                <span className="text-[#EE3223] mr-2">·</span>Productos
-              </Link>
-            </div>
-          )}
 
-          {/* Informes */}
-          <div className={sectionBtn} onClick={() => setOpenInf(o => !o)}>
-            <span className="flex items-center gap-2">
-              <ChartBarIcon className="w-5 h-5 text-[#F25E52]" />
-              Informes
-            </span>
-            {openInf ? (
-              <ChevronUpIcon className="w-5 h-5 text-[#F25E52]" />
-            ) : (
-              <ChevronDownIcon className="w-5 h-5 text-[#F25E52]" />
+          {/* Menú (solo esta parte scrollea) */}
+          <nav className="flex-1 px-2 space-y-1 overflow-y-auto pr-2">
+            {/* Información General (por ahora sin navegación) */}
+            <div className={singleBtn}>
+              <InformationCircleIcon className="w-5 h-5 text-[#F25E52]" />
+              <span>Información General</span>
+            </div>
+
+            {/* Operaciones */}
+            <div className={sectionBtn} onClick={() => setOpenOps(o => !o)}>
+              <span className="flex items-center gap-2">
+                <ArrowPathIcon className="w-5 h-5 text-[#F25E52]" />
+                Operaciones
+              </span>
+              {openOps ? (
+                <ChevronUpIcon className="w-5 h-5 text-[#F25E52]" />
+              ) : (
+                <ChevronDownIcon className="w-5 h-5 text-[#F25E52]" />
+              )}
+            </div>
+            {openOps && (
+              <div className="space-y-1">
+                <div className={dropdownItem}>
+                  <span className="text-[#EE3223] mr-2">·</span>Transferencias
+                </div>
+                <div className={dropdownItem}>
+                  <span className="text-[#EE3223] mr-2">·</span>Ajustes de Inventario
+                </div>
+                <div className={dropdownItem}>
+                  <span className="text-[#EE3223] mr-2">·</span>Desechar
+                </div>
+              </div>
             )}
-          </div>
-          {openInf && (
-            <div className="space-y-1">
-              <div className={dropdownItem}>
-                <span className="text-[#EE3223] mr-2">·</span>Informe de inventario
-              </div>
-              <div className={dropdownItem}>
-                <span className="text-[#EE3223] mr-2">·</span>Movimiento de productos
-              </div>
-            </div>
-          )}
 
-          {/* Configuración */}
-          <div className={sectionBtn} onClick={() => setOpenCfg(o => !o)}>
-            <span className="flex items-center gap-2">
-              <Cog6ToothIcon className="w-5 h-5 text-[#F25E52]" />
-              Configuración
-            </span>
-            {openCfg ? (
-              <ChevronUpIcon className="w-5 h-5 text-[#F25E52]" />
-            ) : (
-              <ChevronDownIcon className="w-5 h-5 text-[#F25E52]" />
+            {/* Productos */}
+            <div className={sectionBtn} onClick={() => setOpenProd(o => !o)}>
+              <span className="flex items-center gap-2">
+                <ArchiveBoxIcon className="w-5 h-5 text-[#F25E52]" />
+                Productos
+              </span>
+              {openProd ? (
+                <ChevronUpIcon className="w-5 h-5 text-[#F25E52]" />
+              ) : (
+                <ChevronDownIcon className="w-5 h-5 text-[#F25E52]" />
+              )}
+            </div>
+            {openProd && (
+              <div className="space-y-1">
+                <Link to="/inventario/productos" className={dropdownItem}>
+                  <span className="text-[#EE3223] mr-2">·</span>Productos
+                </Link>
+              </div>
             )}
-          </div>
-          {openCfg && (
-            <div className="space-y-1">
-              <div className={dropdownItem}>
-                <span className="text-[#EE3223] mr-2">·</span>Ajustes
-              </div>
-              <div className={dropdownItem}>
-                <span className="text-[#EE3223] mr-2">·</span>Almacenes
-              </div>
-              <div className={dropdownItem}>
-                <span className="text-[#EE3223] mr-2">·</span>Tipos de operaciones
-              </div>
-              <div className={dropdownItem}>
-                <span className="text-[#EE3223] mr-2">·</span>Categorías de productos
-              </div>
-            </div>
-          )}
-        </nav>
 
-        {/* Inicio + Cerrar Sesión (fijos abajo) */}
-        <div className="px-6 py-4 space-y-2 shrink-0">
-          <Link
-            to="/"
-            className="w-full inline-flex items-center justify-center rounded-3xl bg-[rgba(255,245,238,0.95)] text-[#CE1E10] font-bold px-5 py-2 shadow-2xl hover:bg-[#EE3223] hover:text-white transition"
-          >
-            <HomeIcon className="w-5 h-5 mr-2" />
-            Inicio
-          </Link>
-          <button
-            onClick={handleLogout}
-            className="w-full inline-flex items-center justify-center rounded-3xl bg-[#EE3223] text-white font-bold px-5 py-2 shadow-2xl transition cursor-pointer hover:bg-[rgba(255,245,238,0.95)] hover:text-[#CE1E10]"
-          >
-            <ArrowLeftOnRectangleIcon className="w-5 h-5 mr-2" />
-            Cerrar Sesión
-          </button>
+            {/* Informes */}
+            <div className={sectionBtn} onClick={() => setOpenInf(o => !o)}>
+              <span className="flex items-center gap-2">
+                <ChartBarIcon className="w-5 h-5 text-[#F25E52]" />
+                Informes
+              </span>
+              {openInf ? (
+                <ChevronUpIcon className="w-5 h-5 text-[#F25E52]" />
+              ) : (
+                <ChevronDownIcon className="w-5 h-5 text-[#F25E52]" />
+              )}
+            </div>
+            {openInf && (
+              <div className="space-y-1">
+                <div className={dropdownItem}>
+                  <span className="text-[#EE3223] mr-2">·</span>Informe de inventario
+                </div>
+                <div className={dropdownItem}>
+                  <span className="text-[#EE3223] mr-2">·</span>Movimiento de productos
+                </div>
+              </div>
+            )}
+
+            {/* Configuración */}
+            <div className={sectionBtn} onClick={() => setOpenCfg(o => !o)}>
+              <span className="flex items-center gap-2">
+                <Cog6ToothIcon className="w-5 h-5 text-[#F25E52]" />
+                Configuración
+              </span>
+              {openCfg ? (
+                <ChevronUpIcon className="w-5 h-5 text-[#F25E52]" />
+              ) : (
+                <ChevronDownIcon className="w-5 h-5 text-[#F25E52]" />
+              )}
+            </div>
+            {openCfg && (
+              <div className="space-y-1">
+                <div className={dropdownItem}>
+                  <span className="text-[#EE3223] mr-2">·</span>Ajustes
+                </div>
+                <div className={dropdownItem}>
+                  <span className="text-[#EE3223] mr-2">·</span>Almacenes
+                </div>
+                <div className={dropdownItem}>
+                  <span className="text-[#EE3223] mr-2">·</span>Tipos de operaciones
+                </div>
+                <div className={dropdownItem}>
+                  <span className="text-[#EE3223] mr-2">·</span>Categorías de productos
+                </div>
+              </div>
+            )}
+          </nav>
+
+          {/* Inicio + Cerrar Sesión (fijos abajo) */}
+          <div className="px-6 py-4 space-y-2 shrink-0">
+            <Link
+              to="/"
+              className="w-full inline-flex items-center justify-center rounded-3xl bg-[rgba(255,245,238,0.95)] text-[#CE1E10] font-bold px-5 py-2 shadow-2xl hover:bg-[#EE3223] hover:text-white transition"
+            >
+              <HomeIcon className="w-5 h-5 mr-2" />
+              Inicio
+            </Link>
+            <button
+              onClick={handleLogout}
+              className="w-full inline-flex items-center justify-center rounded-3xl bg-[#EE3223] text-white font-bold px-5 py-2 shadow-2xl transition cursor-pointer hover:bg-[rgba(255,245,238,0.95)] hover:text-[#CE1E10]"
+            >
+              <ArrowLeftOnRectangleIcon className="w-5 h-5 mr-2" />
+              Cerrar Sesión
+            </button>
+          </div>
         </div>
       </aside>
 
-      {/* Panel derecho */}
-      <main className="flex-1 min-h-0 min-w-0 overflow-y-auto p-8">
-        {showProductos ? (
-          <Productos />
-        ) : (
-          <div className="text-gray-600">
-            Selecciona una opción del menú.
-          </div>
-        )}
+      {/* Panel derecho con su propio fondo y scroll independiente */}
+      <main className="relative flex-1 min-h-0 min-w-0 overflow-y-auto">
+        {/* BG imagen del panel derecho */}
+        <div
+          className="absolute inset-0 bg-cover bg-center"
+          // Cambiá 'inventory.jpg' por el nombre real de tu archivo
+          style={{ backgroundImage: "url('/fondoInventario.png')" }}
+          aria-hidden="true"
+        />
+        {/* Overlay para legibilidad */}
+        <div className="absolute inset-0 bg-white/70" aria-hidden="true" />
+
+        {/* Contenido del panel derecho */}
+        <div className="relative p-8">
+          {showProductos ? (
+            <Productos />
+          ) : (
+            <div className="text-gray-600">
+              Selecciona una opción del menú.
+            </div>
+          )}
+        </div>
       </main>
     </div>
   )
