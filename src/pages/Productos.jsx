@@ -10,6 +10,11 @@ import {
   PhotoIcon,
 } from '@heroicons/react/24/solid'
 
+const catLabel = (c) => c.parent_name
+  ? `${c.name} — ${c.parent_name}`
+  : c.name;
+
+
 const unitOptions = ['unidad', 'caja', 'pack', 'docena', 'bolsa', 'kg', 'g', 'lb', 'l', 'ml', 'm', 'cm']
 
 const btnPrimary =
@@ -55,7 +60,9 @@ export default function Productos() {
   )
 
   useEffect(() => {
-    listCategories().then(setCategories).catch(console.error)
+    listCategories()
+   .then((arr) => setCategories(Array.isArray(arr) ? arr : []))
+   .catch(console.error)
   }, [])
 
   useEffect(() => {
@@ -196,8 +203,8 @@ export default function Productos() {
             className="w-full border rounded px-3 py-2 bg-white"
           >
             <option value="">Todas</option>
-            {categories.map(c => (
-              <option key={c.id} value={c.id}>{c.name}</option>
+            { (Array.isArray(categories) ? categories : []).map(c => (
+              <option key={c.id} value={c.id}>{catLabel(c)}</option>
             ))}
           </select>
         </div>
@@ -357,8 +364,8 @@ export default function Productos() {
                     onChange={(e) => setForm({ ...form, category_id: e.target.value })}
                   >
                     <option value="">(Sin categoría)</option>
-                    {categories.map(c => (
-                      <option key={c.id} value={c.id}>{c.name}</option>
+                    { (Array.isArray(categories) ? categories : []).map(c => (
+                      <option key={c.id} value={c.id}>{catLabel(c)}</option>
                     ))}
                   </select>
                 </div>
