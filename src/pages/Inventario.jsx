@@ -14,6 +14,7 @@ import {
   Cog6ToothIcon,
 } from '@heroicons/react/24/solid'
 import Productos from './Productos'
+import Categorias from './Categorias'
 
 export default function Inventario() {
   const navigate = useNavigate()
@@ -42,6 +43,7 @@ export default function Inventario() {
 
   // qué mostrar en el panel derecho
   const showProductos = location.pathname === '/inventario/productos'
+  const showCategorias = location.pathname === '/inventario/categorias'
 
   return (
     <div className="h-screen min-h-0 overflow-hidden flex bg-[#FFF5EE]">
@@ -169,9 +171,9 @@ export default function Inventario() {
                 <div className={dropdownItem}>
                   <span className="text-[#EE3223] mr-2">·</span>Tipos de operaciones
                 </div>
-                <div className={dropdownItem}>
+                <Link to="/inventario/categorias" className={dropdownItem}>
                   <span className="text-[#EE3223] mr-2">·</span>Categorías de productos
-                </div>
+                </Link>
               </div>
             )}
           </nav>
@@ -210,14 +212,17 @@ export default function Inventario() {
 
         {/* Contenido del panel derecho */}
         <div className="relative p-8">
-          {showProductos ? (
-            <Productos />
-          ) : (
-            <div className="text-gray-600">
-              Selecciona una opción del menú.
-            </div>
-          )}
+        {showProductos ? (
+        <Productos />
+      ) : showCategorias ? (
+        <Categorias />
+      ) : (
+      <div className="text-gray-600">
+      Selecciona una opción del menú.
         </div>
+        )}
+      </div>
+
       </main>
     </div>
   )
